@@ -1,0 +1,36 @@
+{
+    "name": "agoalofalife/reports",
+    "description": "UI for created and download reports in Laravel",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "agoalofalife",
+            "email": "agoalofalife@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "agoalofalife\\Reports\\":"src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "agoalofalife\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --stop-on-failure --no-coverage"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "agoalofalife\\Reports\\ReportsServiceProvider"
+            ]
+        }
+    }
+}
