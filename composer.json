@@ -1,5 +1,6 @@
 {
     "name": "agoalofalife/reports",
+    "keywords": ["laravel", "reports"],
     "description": "UI for created and download reports in Laravel",
     "type": "library",
     "license": "MIT",
