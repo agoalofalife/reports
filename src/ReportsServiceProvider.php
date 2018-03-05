@@ -34,9 +34,9 @@ class ReportsServiceProvider extends ServiceProvider
 //        $this->publishes([
 //            __DIR__.'/../database/migrations' => database_path('migrations'),
 //        ], 'reports-migration');
-//        $this->publishes([
-//            __DIR__.'/../config/postman.php' => config_path('reports.php'),
-//        ], 'reports-migration');
+        $this->publishes([
+            __DIR__.'/../config/reports.php' => config_path('reports.php'),
+        ], 'reports-migration');
 //        $this->publishes([
 //            __DIR__.'/../resources/lang' => resource_path('lang/vendor/reports'),
 //        ], 'reports-migration');
@@ -46,9 +46,9 @@ class ReportsServiceProvider extends ServiceProvider
 //        $this->publishes([
 //            __DIR__.'/../database/seeds' => database_path('seeds'),
 //        ], 'reports-migration');
-//        $this->publishes([
-//            __DIR__.'/../resources/assets/js/components' => base_path('resources/assets/js/components/reports'),
-//        ], 'reports-components');
+        $this->publishes([
+            __DIR__.'/../resources/assets/js/components' => base_path('resources/assets/js/components/reports'),
+        ], 'reports-components');
     }
 
     protected function registerRoutes() : void
