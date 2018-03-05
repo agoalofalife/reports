@@ -1,0 +1,10 @@
+/vendor
+composer.phar
+composer.lock
+.DS_Store
+Thumbs.db
+/node_modules
+npm-debug.log
+env.testing
+/tests/Coverage
+clover.xml

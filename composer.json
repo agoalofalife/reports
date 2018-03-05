@@ -13,6 +13,12 @@
     "require": {
         "php": ">=7.1.0"
     },
+    "require-dev": {
+        "fzaninotto/faker": "^1.6",
+        "mockery/mockery": "^0.9.9",
+        "orchestra/testbench": "~3.5",
+        "phpunit/phpunit": "~6.0"
+    },
     "autoload": {
         "psr-4": {
             "agoalofalife\\Reports\\":"src/"
