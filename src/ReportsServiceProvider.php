@@ -16,6 +16,7 @@ class ReportsServiceProvider extends ServiceProvider
             Console\InstallCommand::class,
             Console\AssetsConsole::class,
             Console\SeederCommand::class,
+            Console\ReportMakeCommand::class,
         ]);
         $this->loadViews();
         $this->mergeConfigFrom(__DIR__.'/../config/reports.php', 'reports');
