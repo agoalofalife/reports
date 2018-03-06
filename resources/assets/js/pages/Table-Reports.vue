@@ -20,7 +20,7 @@
             <!--</el-menu-item>-->
         <!--</el-menu>-->
         <el-badge :value="countNotification" :max="1000" class="item">
-            <i class="fa fa-bell" aria-hidden="true"></i>
+            <i class="fa fa-bell" aria-hidden="true" @click="notifications"></i>
         </el-badge>
         <el-table
                 v-loading="!states.isReadyReports"
@@ -108,6 +108,17 @@
             },
             handleClose(key, keyPath) {
                 console.log(key, keyPath);
+            },
+            notifications(){
+                this.$alert('This is a message', 'Title', {
+                    confirmButtonText: 'OK',
+                    callback: action => {
+                        this.$message({
+                            type: 'info',
+                            message: `action: ${ action }`
+                        });
+                    }
+                });
             }
         },
         created(){
