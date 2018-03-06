@@ -3,8 +3,34 @@
 namespace DummyNamespace;
 
 use Illuminate\Database\Eloquent\Model;
+use agoalofalife\Reports\Report;
 
-class DummyClass extends Model
+class DummyClass extends Report
 {
-    //
+     /**
+     * Get file name
+     * @return string
+     */
+    function getFilename() : string
+    {
+        return '';
+    }
+
+    /**
+     * Get title report
+     * @return string
+     */
+    function getTitle() : string
+    {
+        return '';
+    }
+
+    /**
+     * Get description report
+     * @return string
+     */
+    function getDescription() : string
+    {
+        return '';
+    }
 }
