@@ -23,29 +23,30 @@
             <i class="fa fa-bell" aria-hidden="true"></i>
         </el-badge>
         <el-table
-                :data="tableData"
+                v-loading="!states.isReadyReports"
+                :data="reports"
                 style="width: 100%"
                 height="650"
         >
             <el-table-column
                     fixed
                     prop="name"
-                    label="Name"
+                    :label="columnsName.name"
                     width="150">
             </el-table-column>
             <el-table-column
                     prop="description"
-                    label="Description"
+                    :label="columnsName.description"
                     width="250">
             </el-table-column>
             <el-table-column
                     prop="date"
-                    label="Date last update"
+                    :label="columnsName.dateLastUpdate"
                     width="250">
             </el-table-column>
             <el-table-column
                     fixed="right"
-                    label="Operations"
+                    :label="columnsName.operations"
                     width="120">
                 <template slot-scope="scope">
                     <i class="fa fa-arrow-circle-down"
@@ -81,7 +82,15 @@
                   process:false,
                   error:false,
                   emptyNotification:false,
+                  isReadyReports:false,
                 },
+                columnsName:{
+                    name:'',
+                    description:'',
+                    dateLastUpdate:'',
+                    operations:'Operations'
+                },
+                reports:[],
                 tableData: [{
                     name: 'Report Seller',
                     description: 'Report for sale seller',
@@ -99,6 +108,17 @@
             handleClose(key, keyPath) {
                 console.log(key, keyPath);
             }
+        },
+        created(){
+            this.$http.get('/reports/api/dashboard.table.column')
+                .then(response => {
+                    this.columnsName =  response.data;
+                });
+            this.$http.get('/reports/api/dashboard.reports')
+                .then(response => {
+                    this.reports =  response.data.data;
+                    this.states.isReadyReports = true;
+                });
         }
     }
 </script>

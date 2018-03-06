@@ -3,5 +3,6 @@
 return [
     'reports' => [
 
-    ]
+    ],
+    'middleware' => '',
 ];

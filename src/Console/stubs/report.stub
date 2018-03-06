@@ -1,8 +1,7 @@
 <?php
-
+declare(strict_types=1);
 namespace DummyNamespace;
 
-use Illuminate\Database\Eloquent\Model;
 use agoalofalife\Reports\Report;
 
 class DummyClass extends Report
@@ -11,7 +10,7 @@ class DummyClass extends Report
      * Get file name
      * @return string
      */
-    function getFilename() : string
+    public function getFilename() : string
     {
         return '';
     }
@@ -20,7 +19,7 @@ class DummyClass extends Report
      * Get title report
      * @return string
      */
-    function getTitle() : string
+    public function getTitle() : string
     {
         return '';
     }
@@ -29,7 +28,7 @@ class DummyClass extends Report
      * Get description report
      * @return string
      */
-    function getDescription() : string
+    public function getDescription() : string
     {
         return '';
     }

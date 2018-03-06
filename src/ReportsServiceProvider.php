@@ -11,6 +11,7 @@ class ReportsServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'reports');
         $this->registerRoutes();
         $this->commands([
             Console\InstallCommand::class,
@@ -38,9 +39,9 @@ class ReportsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/reports.php' => config_path('reports.php'),
         ], 'reports-migration');
-//        $this->publishes([
-//            __DIR__.'/../resources/lang' => resource_path('lang/vendor/reports'),
-//        ], 'reports-migration');
+        $this->publishes([
+            __DIR__.'/../resources/lang' => resource_path('lang/vendor/reports'),
+        ], 'reports-migration');
 //        $this->publishes([
 //            REPORTS_PATH.'/public' => public_path('vendor/reports'),
 //        ], 'reports-assets');
@@ -56,7 +57,7 @@ class ReportsServiceProvider extends ServiceProvider
     {
         Route::group([
             'prefix' => 'reports',
-            'namespace' => 'agoalofalife\reports\Http\Controllers',
+            'namespace' => 'agoalofalife\Reports\Http\Controllers',
             'middleware' => 'web',
         ], function () {
             $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
