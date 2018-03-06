@@ -19,7 +19,7 @@
                 <!--<span slot="title">Navigator Four</span>-->
             <!--</el-menu-item>-->
         <!--</el-menu>-->
-        <el-badge :value="1" :max="1000" class="item">
+        <el-badge :value="countNotification" :max="1000" class="item">
             <i class="fa fa-bell" aria-hidden="true"></i>
         </el-badge>
         <el-table
@@ -91,6 +91,7 @@
                     operations:'Operations'
                 },
                 reports:[],
+                countNotification:0,
                 tableData: [{
                     name: 'Report Seller',
                     description: 'Report for sale seller',
@@ -118,6 +119,12 @@
                 .then(response => {
                     this.reports =  response.data.data;
                     this.states.isReadyReports = true;
+                });
+            this.$http.get('/reports/api/dashboard.reports.notificationCount')
+                .then(response => {
+                    this.countNotification = response.data.data.count;
+                    // this.reports =  response.data.data;
+                    // this.states.isReadyReports = true;
                 });
         }
     }

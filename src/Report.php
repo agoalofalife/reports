@@ -5,6 +5,10 @@ namespace agoalofalife\Reports;
 
 use agoalofalife\Reports\Contracts\ResourceCollectionReport;
 
+/**
+ * Class Report
+ * @package agoalofalife\Reports
+ */
 abstract class Report implements ResourceCollectionReport
 {
     /**

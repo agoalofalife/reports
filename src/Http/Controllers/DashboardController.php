@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace agoalofalife\Reports\Http\Controllers;
 
 use agoalofalife\Reports\Http\Resources\ReportsCollection;
+use agoalofalife\Reports\Models\Report;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 
@@ -24,5 +25,12 @@ class DashboardController extends Controller
             return new $classReport;
         });
         return (new ReportsCollection($reports))->response();
+    }
+
+    public function getNotificationCount() : JsonResponse
+    {
+        return response()->json(['data' => [
+            'count' => Report::where('is_completed', true)->get()->count()
+        ]]);
     }
 }
