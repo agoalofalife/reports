@@ -2,10 +2,17 @@
 declare(strict_types=1);
 namespace DummyNamespace;
 
+use agoalofalife\Reports\Contracts\HandlerReport;
 use agoalofalife\Reports\Report;
 
-class DummyClass extends Report
+class DummyClass extends Report implements HandlerReport
 {
+    /**
+     * Disk for filesystem
+     * @var string
+     */
+    protected $disk = 'public';
+
      /**
      * Get file name
      * @return string
@@ -31,5 +38,10 @@ class DummyClass extends Report
     public function getDescription() : string
     {
         return '';
+    }
+
+    public function handler()
+    {
+        // TODO: Implement handler() method.
     }
 }

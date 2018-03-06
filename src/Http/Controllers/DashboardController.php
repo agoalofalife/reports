@@ -18,13 +18,11 @@ class DashboardController extends Controller
         return response()->json(trans("reports::dashboard"));
     }
 
-    public function getReports()
+    public function getReports() : JsonResponse
     {
         $reports = collect(config('reports.reports'))->map(function ($classReport) {
             return new $classReport;
         });
         return (new ReportsCollection($reports))->response();
-//        dd($reports);
-//        return response()->json($reports);
     }
 }

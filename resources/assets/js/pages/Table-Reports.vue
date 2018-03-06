@@ -26,7 +26,7 @@
                 v-loading="!states.isReadyReports"
                 :data="reports"
                 style="width: 100%"
-                height="650"
+                max-height="700"
         >
             <el-table-column
                     fixed
