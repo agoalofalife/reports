@@ -13,5 +13,5 @@ class Report extends Model
     const STATUS_COMPLETED = 'completed';
     const STATUS_NEW = 'new';
 
-    protected $fillable = ['class_name', 'status', 'is_completed'];
+    protected $fillable = ['class_name', 'status', 'is_completed', 'pid'];
 }

@@ -37,6 +37,7 @@ class DashboardController extends Controller
                     'class_name' => $report->getNameClass()
                 ]
             );
+            // TODO check when report empty and i first request
             $reportDatabase->is_completed ? $report->changeCompleted(true) : false;
             $report->changeStatus($reportDatabase->status);
             return $report;
@@ -58,23 +59,38 @@ class DashboardController extends Controller
     /**
      * Update report
      * @param Request $request
+     * @return JsonResponse
      */
     public function updateReport(Request $request)
     {
-//        $report = Report::where('class_name', $request->class)->get()->first();
+        $report = Report::where('class_name', $request->class)->get()->first();
 //        $report->update([
 //           'status' => Report::STATUS_PROCESS
 //        ]);
 //        $report = app()->make($report->class_name);
 //        dd($report->handler()->storage());
-        dd(ProcessUtils::escapeArgument(TestReport::class));
+        try {
+            $process = new Process(
+                sprintf('php ../artisan reports:handle %s', ProcessUtils::escapeArgument(TestReport::class))
+            );
+            $process->start();
+            $report->update([
+                'pid' => $process->getPid()
+            ]);
+//            while ($process->isRunning()) {
+//                // waiting for process to finish
+//            }
+//
+//            dd($process->getOutput());
 
-        $process = new Process('php ../artisan reports:handle  App\\\Reports\\\TestReport');
-        $process->run();
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
+            return response()->json(['data' => [
+                'status' => 'success'
+            ]]);
+        } catch (\Exception $exception) {
+            return response()->json(['data' => [
+                'status' => 'error',
+                'message' => $exception->getMessage()
+            ]], 500);
         }
-       dd($process->getOutput());
-
     }
 }

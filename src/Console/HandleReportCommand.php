@@ -5,7 +5,6 @@ namespace agoalofalife\Reports\Console;
 
 use agoalofalife\Reports\Report;
 use Illuminate\Console\Command;
-use Illuminate\Support\ProcessUtils;
 
 /**
  * Class HandleReportCommand
@@ -35,7 +34,6 @@ class HandleReportCommand extends Command
      */
     public function handle() : void
     {
-        dd(ProcessUtils::escapeArgument($this->argument('classReport')));
         $classReport = $this->argument('classReport');
 
         if (class_exists($classReport) === false) {
