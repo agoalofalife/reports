@@ -58,13 +58,31 @@ abstract class Report implements ResourceCollectionReport
             'name' => $this->getTitle(),
             'description' => $this->getDescription(),
             'class' => $this->getNameClass(),
-            'path' => Storage::disk($this->disk)->exists($this->getFilename()) ?
-                Storage::disk($this->disk)->get($this->getFilename())->url() : null,
-            'lastModified' => Storage::disk($this->disk)->exists($this->getFilename()) ?
-                Storage::disk($this->disk)->lastModified($this->getFilename()) : null,
+            'path' => $this->getPathToFile(),
+            'lastModified' => $this->getDateLastModified(),
             'isCompleted' => $this->isCompleted,
             'status' => $this->status
         ];
+    }
+
+    /**
+     * Get path to file
+     * @return null|string
+     */
+    public function getPathToFile() : ?string
+    {
+        return Storage::disk($this->disk)->exists($this->getFilename()) ?
+            Storage::disk($this->disk)->get($this->getFilename())->url() : null;
+    }
+
+    /**
+     * Get date last modified file
+     * @return null|string
+     */
+    public function getDateLastModified() : ?string
+    {
+        return Storage::disk($this->disk)->exists($this->getFilename()) ?
+            Storage::disk($this->disk)->lastModified($this->getFilename()) : null;
     }
     /**
      * Get full class name
