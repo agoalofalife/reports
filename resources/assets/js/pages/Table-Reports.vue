@@ -1,28 +1,11 @@
 <template>
 <div>
     <el-row>
-        <!--<el-radio-group v-model="states.emptyNotification" style="margin-bottom: 20px;">-->
-            <!--<el-radio-button :label="false">expand</el-radio-button>-->
-            <!--<el-radio-button :label="true">collapse</el-radio-button>-->
-        <!--</el-radio-group>-->
-        <!--<el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="states.emptyNotification">-->
-            <!--<el-menu-item index="2">-->
-                <!--<i class="el-icon-menu"></i>-->
-                <!--<span slot="title">Navigator Two</span>-->
-            <!--</el-menu-item>-->
-            <!--<el-menu-item index="3" disabled>-->
-                <!--<i class="el-icon-document"></i>-->
-                <!--<span slot="title">Navigator Three</span>-->
-            <!--</el-menu-item>-->
-            <!--<el-menu-item index="4">-->
-                <!--<i class="el-icon-setting"></i>-->
-                <!--<span slot="title">Navigator Four</span>-->
-            <!--</el-menu-item>-->
-        <!--</el-menu>-->
         <el-badge :value="countNotification" :max="1000" class="item">
-            <i class="fa fa-bell" aria-hidden="true" @click="notifications"></i>
+            <i class="fa fa-bell" aria-hidden="true"></i>
         </el-badge>
         <el-table
+                :row-class-name="tableRowClassName"
                 v-loading="!states.isReadyReports"
                 :data="reports"
                 style="width: 100%"
@@ -51,7 +34,7 @@
                 <template slot-scope="scope">
                     <i class="fa fa-arrow-circle-down"
                        aria-hidden="true"
-                       v-show="states.error === false && states.process === false"
+                       v-show="states.error === false && states.process === false && scope.row.path !== null"
                     ></i>
                     <i class="fa fa-exclamation-circle"
                        aria-hidden="true"
@@ -72,7 +55,9 @@
 </div>
 </template>
 <style>
-
+    .el-table .is-complited-row {
+        background: #f0f9eb;
+    }
 </style>
 <script>
     export default {
@@ -100,26 +85,15 @@
             }
         },
         methods :{
+            tableRowClassName({row, rowIndex}) {
+                if (row.isComplited !== undefined && row.isComplited === true) {
+                    return 'is-complited-row';
+                }
+                return '';
+            },
             handleClickDownload(){
                 this.states.process = true;
             },
-            handleOpen(key, keyPath) {
-                console.log(key, keyPath);
-            },
-            handleClose(key, keyPath) {
-                console.log(key, keyPath);
-            },
-            notifications(){
-                this.$alert('This is a message', 'Title', {
-                    confirmButtonText: 'OK',
-                    callback: action => {
-                        this.$message({
-                            type: 'info',
-                            message: `action: ${ action }`
-                        });
-                    }
-                });
-            }
         },
         created(){
             this.$http.get('/reports/api/dashboard.table.column')
@@ -130,12 +104,16 @@
                 .then(response => {
                     this.reports =  response.data.data;
                     this.states.isReadyReports = true;
+                })
+                .catch(error => {
+                    this.$notify({
+                        message: error.message,
+                        type: 'warning'
+                    });
                 });
             this.$http.get('/reports/api/dashboard.reports.notificationCount')
                 .then(response => {
                     this.countNotification = response.data.data.count;
-                    // this.reports =  response.data.data;
-                    // this.states.isReadyReports = true;
                 });
         }
     }

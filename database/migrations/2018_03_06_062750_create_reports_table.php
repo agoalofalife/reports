@@ -17,7 +17,7 @@ class CreateReportsTable extends Migration
             $table->increments('id');
             $table->string('class_name')->unique()->index();
             $table->enum('status', ['error', 'process', 'completed']);
-            $table->boolean('is_completed')->comment('Check read or not');
+            $table->boolean('is_completed')->comment('Check read or not')->default(false);
             $table->timestamps();
         });
     }

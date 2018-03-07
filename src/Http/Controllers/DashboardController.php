@@ -19,6 +19,10 @@ class DashboardController extends Controller
         return response()->json(trans("reports::dashboard"));
     }
 
+    /**
+     * Get list reports
+     * @return JsonResponse
+     */
     public function getReports() : JsonResponse
     {
         $reports = collect(config('reports.reports'))->map(function ($classReport) {
@@ -27,6 +31,10 @@ class DashboardController extends Controller
         return (new ReportsCollection($reports))->response();
     }
 
+    /**
+     * Get count not read reports
+     * @return JsonResponse
+     */
     public function getNotificationCount() : JsonResponse
     {
         return response()->json(['data' => [

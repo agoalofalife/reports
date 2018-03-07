@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace agoalofalife\Reports;
 
 use agoalofalife\Reports\Contracts\ResourceCollectionReport;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class Report
@@ -43,7 +44,9 @@ abstract class Report implements ResourceCollectionReport
         return [
             'name' => $this->getTitle(),
             'description' => $this->getDescription(),
-            'class' => $this->getNameClass()
+            'class' => $this->getNameClass(),
+            'path' => Storage::disk($this->disk)->exists($this->getFilename()) ?
+                Storage::disk($this->disk)->get($this->getFilename()) : null
         ];
     }
     /**
