@@ -34,7 +34,7 @@
                 <template slot-scope="scope">
                     <i class="fa fa-arrow-circle-down"
                        aria-hidden="true"
-                       v-show="states.error === false && scope.row.status !== 'process' && scope.row.path !== null"
+                       v-show="states.error === false && (scope.row.status !== 'process' || scope.row.status !== 'worker') && scope.row.path !== null"
                     ></i>
                     <i class="fa fa-exclamation-circle"
                        aria-hidden="true"
@@ -42,9 +42,9 @@
                     <i class="fa fa-refresh"
                        aria-hidden="true"
                        @click="updateReport(scope.row)"
-                       v-show="states.error === false && scope.row.status !== 'process'"
+                       v-show="states.error === false && (scope.row.status !== 'process' && scope.row.status !== 'worker')"
                     ></i>
-                    <i class="el-icon-loading" aria-hidden="true" v-show="scope.row.status === 'process'"></i>
+                    <i class="el-icon-loading" aria-hidden="true" v-show="(scope.row.status !== 'process' || scope.row.status !== 'worker')"></i>
                     <!--<i class="fa fa-file-excel-o" aria-hidden="true"></i>-->
                     <!--<el-button type="text" size="small"><i class="el-icon-download"></i></el-button>-->
                     <!--<el-button type="text" size="small">Download</el-button>-->

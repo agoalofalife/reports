@@ -5,7 +5,6 @@ namespace agoalofalife\Reports\Console;
 
 use agoalofalife\Reports\Models\Report;
 use Illuminate\Console\Command;
-use Illuminate\Support\ProcessUtils;
 
 /**
  * Class ParseReportsCommand
@@ -34,6 +33,7 @@ class ParseReportsCommand extends Command
     public function handle() : void
     {
         $reportInProcess = Report::where('status', Report::STATUS_PROCESS)->get();
+
         if ($reportInProcess->count() > 0) {
             $reportInProcess = $reportInProcess->random();
             $this->call('reports:handle', ['classReport' => $reportInProcess->class_name]);
@@ -44,6 +44,5 @@ class ParseReportsCommand extends Command
         } else {
             $this->warn('Reports in the status "in process" is missing');
         }
-//        sprintf('php ../artisan reports:handle %s', ProcessUtils::escapeArgument($reportInProcess->class_name))
     }
 }
