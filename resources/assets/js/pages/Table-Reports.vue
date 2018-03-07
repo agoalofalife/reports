@@ -90,8 +90,23 @@
                 this.states.process = true;
                 this.$http.post('/reports/api/dashboard.reports.update', report)
                 .then(response => {
-
+                    this.syncReports();
                 });
+            },
+            syncReports(){
+                this.states.isReadyReports = false;
+                this.$http.get('/reports/api/dashboard.reports')
+                    .then(response => {
+                        this.reports =  response.data.data;
+                        this.states.isReadyReports = true;
+                    })
+                    .catch(error => {
+                        this.states.isReadyReports = true;
+                        this.$notify({
+                            message: error.message,
+                            type: 'warning'
+                        });
+                    });
             }
         },
         created(){
@@ -99,17 +114,7 @@
                 .then(response => {
                     this.columnsName =  response.data;
                 });
-            this.$http.get('/reports/api/dashboard.reports')
-                .then(response => {
-                    this.reports =  response.data.data;
-                    this.states.isReadyReports = true;
-                })
-                .catch(error => {
-                    this.$notify({
-                        message: error.message,
-                        type: 'warning'
-                    });
-                });
+            this.syncReports();
             this.$http.get('/reports/api/dashboard.reports.notificationCount')
                 .then(response => {
                     this.countNotification = response.data.data.count;

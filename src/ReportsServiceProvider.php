@@ -60,6 +60,7 @@ class ReportsServiceProvider extends ServiceProvider
             Console\SeederCommand::class,
             Console\ReportMakeCommand::class,
             Console\HandleReportCommand::class,
+            Console\ParseReportsCommand::class,
         ]);
     }
 

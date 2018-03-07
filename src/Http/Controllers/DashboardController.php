@@ -66,14 +66,5 @@ class DashboardController extends Controller
         return response()->json(['data' => [
             'status' => 'success'
         ]]);
-
-//            $process = new Process(
-//                sprintf('php ../artisan reports:handle %s', ProcessUtils::escapeArgument(TestReport::class))
-//            );
-//            $process->run();
-//
-//            $report->update([
-//                'pid' => $process->getPid()
-//            ]);
     }
 }
