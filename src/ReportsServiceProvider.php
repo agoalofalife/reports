@@ -6,6 +6,7 @@ namespace agoalofalife\Reports;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
+
 class ReportsServiceProvider extends ServiceProvider
 {
     public function boot()
@@ -13,12 +14,7 @@ class ReportsServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'reports');
         $this->registerRoutes();
-        $this->commands([
-            Console\InstallCommand::class,
-            Console\AssetsConsole::class,
-            Console\SeederCommand::class,
-            Console\ReportMakeCommand::class,
-        ]);
+        $this->registerCommands();
         $this->loadViews();
         $this->mergeConfigFrom(__DIR__.'/../config/reports.php', 'reports');
         $this->toPublish();
@@ -51,6 +47,20 @@ class ReportsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/assets/js/components' => base_path('resources/assets/js/components/reports'),
         ], 'reports-components');
+    }
+
+    /**
+     * Register commands
+     */
+    protected function registerCommands() : void
+    {
+        $this->commands([
+            Console\InstallCommand::class,
+            Console\AssetsConsole::class,
+            Console\SeederCommand::class,
+            Console\ReportMakeCommand::class,
+            Console\HandleReportCommand::class,
+        ]);
     }
 
     protected function registerRoutes() : void

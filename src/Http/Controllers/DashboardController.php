@@ -5,9 +5,13 @@ namespace agoalofalife\Reports\Http\Controllers;
 
 use agoalofalife\Reports\Http\Resources\ReportsCollection;
 use agoalofalife\Reports\Models\Report;
+use App\Reports\TestReport;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\ProcessUtils;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 class DashboardController extends Controller
 {
@@ -57,11 +61,20 @@ class DashboardController extends Controller
      */
     public function updateReport(Request $request)
     {
-        $report = Report::where('class_name', $request->class)->get()->first();
-        $report->update([
-           'status' => Report::STATUS_PROCESS
-        ]);
-        $report = app()->make($report->class_name);
-        dd($report->handler()->storage());
+//        $report = Report::where('class_name', $request->class)->get()->first();
+//        $report->update([
+//           'status' => Report::STATUS_PROCESS
+//        ]);
+//        $report = app()->make($report->class_name);
+//        dd($report->handler()->storage());
+        dd(ProcessUtils::escapeArgument(TestReport::class));
+
+        $process = new Process('php ../artisan reports:handle  App\\\Reports\\\TestReport');
+        $process->run();
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+       dd($process->getOutput());
+
     }
 }
