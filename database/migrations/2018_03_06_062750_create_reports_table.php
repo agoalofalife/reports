@@ -16,7 +16,7 @@ class CreateReportsTable extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->increments('id');
             $table->string('class_name')->unique()->index();
-            $table->enum('status', ['error', 'process', 'completed']);
+            $table->enum('status', ['error', 'process', 'completed', 'new'])->default('new');
             $table->boolean('is_completed')->comment('Check read or not')->default(false);
             $table->timestamps();
         });

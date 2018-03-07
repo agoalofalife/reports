@@ -27,8 +27,19 @@ class DashboardController extends Controller
     public function getReports() : JsonResponse
     {
         $reports = collect(config('reports.reports'))->map(function ($classReport) {
-            return new $classReport;
+            $report = new $classReport;
+        $reportDatabase = Report::firstOrCreate(
+            [
+                'class_name' => $report->getNameClass()
+            ],
+            [
+                'class_name' => $report->getNameClass(),
+            ]
+        );
+        dd($report->toArray());
+            return $report;
         });
+//        dd($reports);
         return (new ReportsCollection($reports))->response();
     }
 
@@ -59,6 +70,6 @@ class DashboardController extends Controller
 //            ]
 //        );
 
-        dd($request->all(), $report);
+//        dd($request->all(), $report);
     }
 }

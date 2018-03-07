@@ -53,7 +53,7 @@ abstract class Report implements ResourceCollectionReport
      * Get full class name
      * @return string
      */
-    private function getNameClass() : string
+    public function getNameClass() : string
     {
         return get_class($this);
     }
