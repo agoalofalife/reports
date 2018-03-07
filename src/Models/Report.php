@@ -8,5 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model
 {
+    const STATUS_ERROR = 'error';
+    const STATUS_PROCESS = 'process';
+    const STATUS_COMPLETED = 'completed';
+
     protected $fillable = ['class_name', 'status', 'is_completed'];
 }

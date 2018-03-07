@@ -6,6 +6,7 @@ namespace agoalofalife\Reports\Http\Controllers;
 use agoalofalife\Reports\Http\Resources\ReportsCollection;
 use agoalofalife\Reports\Models\Report;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class DashboardController extends Controller
@@ -40,5 +41,24 @@ class DashboardController extends Controller
         return response()->json(['data' => [
             'count' => Report::where('is_completed', true)->get()->count()
         ]]);
+    }
+
+    /**
+     * Update report
+     * @param Request $request
+     */
+    public function updateReport(Request $request)
+    {
+//        $report = Report::firstOrCreate(
+//            [
+//                'class_name' => $request->class
+//            ],
+//            [
+//                'class_name' => $request->class,
+//                'status' => Report::STATUS_PROCESS,
+//            ]
+//        );
+
+        dd($request->all(), $report);
     }
 }

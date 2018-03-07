@@ -46,7 +46,7 @@ abstract class Report implements ResourceCollectionReport
             'description' => $this->getDescription(),
             'class' => $this->getNameClass(),
             'path' => Storage::disk($this->disk)->exists($this->getFilename()) ?
-                Storage::disk($this->disk)->get($this->getFilename()) : null
+                Storage::disk($this->disk)->get($this->getFilename())->url() : null
         ];
     }
     /**

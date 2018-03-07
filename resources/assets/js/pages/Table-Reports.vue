@@ -41,7 +41,7 @@
                        v-show="states.error"></i>
                     <i class="fa fa-refresh"
                        aria-hidden="true"
-                       @click="handleClickDownload"
+                       @click="updateReport(scope.row)"
                        v-show="states.error === false && states.process === false"
                     ></i>
                     <i class="el-icon-loading" aria-hidden="true" v-show="states.process"></i>
@@ -91,9 +91,14 @@
                 }
                 return '';
             },
-            handleClickDownload(){
+            updateReport(report){
+
                 this.states.process = true;
-            },
+                this.$http.post('/reports/api/dashboard.reports.update', report)
+                .then(response => {
+
+                });
+            }
         },
         created(){
             this.$http.get('/reports/api/dashboard.table.column')
