@@ -5,6 +5,7 @@ namespace agoalofalife\Reports;
 
 use agoalofalife\Reports\Contracts\ResourceCollectionReport;
 use Illuminate\Support\Facades\Storage;
+use \agoalofalife\Reports\Models\Report as ReportBase;
 
 /**
  * Class Report
@@ -12,6 +13,18 @@ use Illuminate\Support\Facades\Storage;
  */
 abstract class Report implements ResourceCollectionReport
 {
+    /**
+     * Status report
+     * @var string
+     */
+    protected $status = ReportBase::STATUS_NEW;
+
+    /**
+     * Flag update report and not read
+     * @var bool
+     */
+    protected $isCompleted = false;
+
     /**
      * Disk for filesystem
      * @var string
@@ -46,7 +59,11 @@ abstract class Report implements ResourceCollectionReport
             'description' => $this->getDescription(),
             'class' => $this->getNameClass(),
             'path' => Storage::disk($this->disk)->exists($this->getFilename()) ?
-                Storage::disk($this->disk)->get($this->getFilename())->url() : null
+                Storage::disk($this->disk)->get($this->getFilename())->url() : null,
+            'lastModified' => Storage::disk($this->disk)->exists($this->getFilename()) ?
+                Storage::disk($this->disk)->lastModified($this->getFilename()) : null,
+            'isCompleted' => $this->isCompleted,
+            'status' => $this->status
         ];
     }
     /**
@@ -56,5 +73,23 @@ abstract class Report implements ResourceCollectionReport
     public function getNameClass() : string
     {
         return get_class($this);
+    }
+
+    /**
+     * Change is completed
+     * @param bool $flag
+     */
+    public function changeCompleted(bool $flag) : void
+    {
+        $this->isCompleted = $flag;
+    }
+
+    /**
+     * Change status state report
+     * @param string $status
+     */
+    public function changeStatus(string $status) : void
+    {
+        $this->status = $status;
     }
 }

@@ -23,7 +23,7 @@
                     width="250">
             </el-table-column>
             <el-table-column
-                    prop="date"
+                    prop="lastModified"
                     :label="columnsName.dateLastUpdate"
                     width="250">
             </el-table-column>
@@ -34,7 +34,7 @@
                 <template slot-scope="scope">
                     <i class="fa fa-arrow-circle-down"
                        aria-hidden="true"
-                       v-show="states.error === false && states.process === false && scope.row.path !== null"
+                       v-show="states.error === false && scope.row.status !== 'process' && scope.row.path !== null"
                     ></i>
                     <i class="fa fa-exclamation-circle"
                        aria-hidden="true"
@@ -42,9 +42,9 @@
                     <i class="fa fa-refresh"
                        aria-hidden="true"
                        @click="updateReport(scope.row)"
-                       v-show="states.error === false && states.process === false"
+                       v-show="states.error === false && scope.row.status !== 'process'"
                     ></i>
-                    <i class="el-icon-loading" aria-hidden="true" v-show="states.process"></i>
+                    <i class="el-icon-loading" aria-hidden="true" v-show="scope.row.status === 'process'"></i>
                     <!--<i class="fa fa-file-excel-o" aria-hidden="true"></i>-->
                     <!--<el-button type="text" size="small"><i class="el-icon-download"></i></el-button>-->
                     <!--<el-button type="text" size="small">Download</el-button>-->
@@ -77,22 +77,16 @@
                 },
                 reports:[],
                 countNotification:0,
-                tableData: [{
-                    name: 'Report Seller',
-                    description: 'Report for sale seller',
-                    date: '2018-01-23 11:43:13',
-                }]
             }
         },
         methods :{
             tableRowClassName({row, rowIndex}) {
-                if (row.isComplited !== undefined && row.isComplited === true) {
+                if (row.isCompleted !== undefined && row.isCompleted === true) {
                     return 'is-complited-row';
                 }
                 return '';
             },
             updateReport(report){
-
                 this.states.process = true;
                 this.$http.post('/reports/api/dashboard.reports.update', report)
                 .then(response => {

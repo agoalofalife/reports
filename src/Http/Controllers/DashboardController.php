@@ -26,20 +26,17 @@ class DashboardController extends Controller
      */
     public function getReports() : JsonResponse
     {
-        $reports = collect(config('reports.reports'))->map(function ($classReport) {
+        $reports = collect(config('reports.reports'))->map(function (string $classReport) {
             $report = new $classReport;
-        $reportDatabase = Report::firstOrCreate(
-            [
-                'class_name' => $report->getNameClass()
-            ],
-            [
-                'class_name' => $report->getNameClass(),
-            ]
-        );
-        dd($report->toArray());
+            $reportDatabase = Report::firstOrCreate(
+                [
+                    'class_name' => $report->getNameClass()
+                ]
+            );
+            $reportDatabase->is_completed ? $report->changeCompleted(true) : false;
+            $report->changeStatus($reportDatabase->status);
             return $report;
         });
-//        dd($reports);
         return (new ReportsCollection($reports))->response();
     }
 
@@ -60,16 +57,11 @@ class DashboardController extends Controller
      */
     public function updateReport(Request $request)
     {
-//        $report = Report::firstOrCreate(
-//            [
-//                'class_name' => $request->class
-//            ],
-//            [
-//                'class_name' => $request->class,
-//                'status' => Report::STATUS_PROCESS,
-//            ]
-//        );
-
-//        dd($request->all(), $report);
+        $report = Report::where('class_name', $request->class)->get()->first();
+        $report->update([
+           'status' => Report::STATUS_PROCESS
+        ]);
+        $report = app()->make($report->class_name);
+        dd($report);
     }
 }
