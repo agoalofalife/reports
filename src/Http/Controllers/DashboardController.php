@@ -62,6 +62,6 @@ class DashboardController extends Controller
            'status' => Report::STATUS_PROCESS
         ]);
         $report = app()->make($report->class_name);
-        dd($report);
+        dd($report->handler()->storage());
     }
 }
