@@ -5,13 +5,9 @@ namespace agoalofalife\Reports\Http\Controllers;
 
 use agoalofalife\Reports\Http\Resources\ReportsCollection;
 use agoalofalife\Reports\Models\Report;
-use App\Reports\TestReport;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\ProcessUtils;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 
 class DashboardController extends Controller
 {
@@ -64,33 +60,20 @@ class DashboardController extends Controller
     public function updateReport(Request $request)
     {
         $report = Report::where('class_name', $request->class)->get()->first();
-//        $report->update([
-//           'status' => Report::STATUS_PROCESS
-//        ]);
-//        $report = app()->make($report->class_name);
-//        dd($report->handler()->storage());
-        try {
-            $process = new Process(
-                sprintf('php ../artisan reports:handle %s', ProcessUtils::escapeArgument(TestReport::class))
-            );
-            $process->start();
-            $report->update([
-                'pid' => $process->getPid()
-            ]);
-//            while ($process->isRunning()) {
-//                // waiting for process to finish
-//            }
-//
-//            dd($process->getOutput());
+        $report->update([
+           'status' => Report::STATUS_PROCESS
+        ]);
+        return response()->json(['data' => [
+            'status' => 'success'
+        ]]);
 
-            return response()->json(['data' => [
-                'status' => 'success'
-            ]]);
-        } catch (\Exception $exception) {
-            return response()->json(['data' => [
-                'status' => 'error',
-                'message' => $exception->getMessage()
-            ]], 500);
-        }
+//            $process = new Process(
+//                sprintf('php ../artisan reports:handle %s', ProcessUtils::escapeArgument(TestReport::class))
+//            );
+//            $process->run();
+//
+//            $report->update([
+//                'pid' => $process->getPid()
+//            ]);
     }
 }
