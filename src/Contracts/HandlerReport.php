@@ -7,5 +7,5 @@ use agoalofalife\Reports\Report;
 
 interface HandlerReport
 {
-    public function handler() : Report;
+    public function handler($excel) : Report;
 }

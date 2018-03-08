@@ -5,6 +5,7 @@ namespace agoalofalife\Reports\Console;
 
 use agoalofalife\Reports\Report;
 use Illuminate\Console\Command;
+use Maatwebsite\Excel\Facades\Excel;
 
 /**
  * Class HandleReportCommand
@@ -44,6 +45,8 @@ class HandleReportCommand extends Command
             throw new \Exception($classReport . ' class is not subclass ' . Report::class);
         }
 
-        app()->make($classReport)->handler();
+        $report = app()->make($classReport);
+//        dd($report->handler('s'));
+        Excel::create($report->getFileName(), [$report, 'handler'])->store('xls', storage_path('excel/exports'));
     }
 }
