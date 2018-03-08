@@ -44,7 +44,7 @@
                        @click="updateReport(scope.row)"
                        v-show="states.error === false && (scope.row.status !== 'process' && scope.row.status !== 'worker')"
                     ></i>
-                    <i class="el-icon-loading" aria-hidden="true" v-show="(scope.row.status !== 'process' || scope.row.status !== 'worker')"></i>
+                    <i class="el-icon-loading" aria-hidden="true" v-show="(scope.row.status === 'process' || scope.row.status === 'worker')"></i>
                     <!--<i class="fa fa-file-excel-o" aria-hidden="true"></i>-->
                     <!--<el-button type="text" size="small"><i class="el-icon-download"></i></el-button>-->
                     <!--<el-button type="text" size="small">Download</el-button>-->

@@ -31,11 +31,13 @@ class DashboardController extends Controller
             $reportDatabase = Report::firstOrCreate(
                 [
                     'class_name' => $report->getNameClass()
+                ],
+                [
+                    'class_name' => $report->getNameClass()
                 ]
             );
-            // TODO check when report empty and i first request
             $reportDatabase->is_completed ? $report->changeCompleted(true) : false;
-            $report->changeStatus($reportDatabase->status);
+            $report->changeStatus($reportDatabase->status ?? Report::STATUS_NEW);
             return $report;
         });
         return (new ReportsCollection($reports))->response();
