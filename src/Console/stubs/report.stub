@@ -40,8 +40,10 @@ class DummyClass extends Report implements HandlerReport, StorageReport
     {
         return '';
     }
-
-    public function handler()
+    /**
+     * @return Report
+     */
+    public function handler() : Report
     {
         // TODO: Implement handler() method.
     }
