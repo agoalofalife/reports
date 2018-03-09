@@ -8,7 +8,12 @@ use agoalofalife\Reports\Models\Report;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 
+/**
+ * Class DashboardController
+ * @package agoalofalife\Reports\Http\Controllers
+ */
 class DashboardController extends Controller
 {
     /**
@@ -59,7 +64,7 @@ class DashboardController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function updateReport(Request $request)
+    public function updateReport(Request $request) : JsonResponse
     {
         $report = Report::where('class_name', $request->class)->get()->first();
         $report->update([
@@ -68,5 +73,22 @@ class DashboardController extends Controller
         return response()->json(['data' => [
             'status' => 'success'
         ]]);
+    }
+
+    /**
+     * @param string $className
+     * @return mixed
+     */
+    public function downloadFile(string $className)
+    {
+        $className = str_replace('@', '\\', $className);
+        if (class_exists($className)) {
+            $report = app()->make($className);
+            $report->getReportModel()->update([
+                'is_completed' => false
+            ]);
+            return Storage::disk($report->disk)->download($report->getFileNormalize());
+        }
+        return response('Class not exist', 500);
     }
 }

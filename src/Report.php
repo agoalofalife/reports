@@ -126,7 +126,7 @@ abstract class Report implements ResourceCollectionReport
      * Extension
      * @return string
      */
-    protected function getFileNormalize() : string
+    public function getFileNormalize() : string
     {
         return "{$this->getFilename()}.{$this->extension}";
     }

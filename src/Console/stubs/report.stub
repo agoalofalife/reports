@@ -4,9 +4,8 @@ namespace DummyNamespace;
 
 use agoalofalife\Reports\Contracts\HandlerReport;
 use agoalofalife\Reports\Report;
-use agoalofalife\Reports\Contracts\StorageReport;
 
-class DummyClass extends Report implements HandlerReport, StorageReport
+class DummyClass extends Report implements HandlerReport
 {
     /**
      * Disk for filesystem
@@ -47,9 +46,9 @@ class DummyClass extends Report implements HandlerReport, StorageReport
         return '';
     }
     /**
-     * @return Report
+     * @return bool
      */
-    public function handler() : Report
+    public function handler() : bool
     {
         // TODO: Implement handler() method.
     }

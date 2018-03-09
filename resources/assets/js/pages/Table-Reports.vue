@@ -32,10 +32,10 @@
                     :label="columnsName.operations"
                     width="120">
                 <template slot-scope="scope">
-                    <a :href="scope.row.path" target="_blank">
+                    <a :href="'reports/api/dashboard.file.download/' + scope.row.class.replace(/\\/gi, '@')" target="_blank">
                     <i class="fa fa-arrow-circle-down"
                               aria-hidden="true"
-                              v-show="states.error === false && (scope.row.status !== 'process' || scope.row.status !== 'worker') && scope.row.path !== null"
+                              v-show="states.error === false && (scope.row.status !== 'process' && scope.row.status !== 'worker') && scope.row.path !== null"
                     ></i>
                     </a>
                     <i class="fa fa-exclamation-circle"
