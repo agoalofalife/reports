@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace agoalofalife\Reports;
 
 use agoalofalife\Reports\Contracts\ResourceCollectionReport;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use \agoalofalife\Reports\Models\Report as ReportBase;
 
@@ -71,8 +72,8 @@ abstract class Report implements ResourceCollectionReport
      */
     public function getPathToFile() : ?string
     {
-        return Storage::disk($this->disk)->exists($this->getFilename()) ?
-            Storage::disk($this->disk)->get($this->getFilename())->url() : null;
+        return Storage::disk($this->disk)->exists($this->getFileNormalize()) ?
+            Storage::disk($this->disk)->url($this->getFileNormalize()) : null;
     }
 
     /**
@@ -81,8 +82,8 @@ abstract class Report implements ResourceCollectionReport
      */
     public function getDateLastModified() : ?string
     {
-        return Storage::disk($this->disk)->exists($this->getFilename()) ?
-            Storage::disk($this->disk)->lastModified($this->getFilename()) : null;
+        return Storage::disk($this->disk)->exists($this->getFileNormalize()) ?
+            date('Y-m-d H:i:s', Storage::disk($this->disk)->lastModified($this->getFileNormalize())) : null;
     }
     /**
      * Get full class name
@@ -109,5 +110,24 @@ abstract class Report implements ResourceCollectionReport
     public function changeStatus(string $status) : void
     {
         $this->status = $status;
+    }
+
+    /**
+     * Get Model Report
+     * @return Model
+     */
+    public function getReportModel() : Model
+    {
+        return ReportBase::where('class_name', get_class($this))->get()->first();
+    }
+    /**
+     * Get builder two parts string :
+     * Filename
+     * Extension
+     * @return string
+     */
+    protected function getFileNormalize() : string
+    {
+        return "{$this->getFilename()}.{$this->extension}";
     }
 }

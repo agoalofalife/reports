@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace agoalofalife\Reports\Console;
 
 use agoalofalife\Reports\Report;
+use agoalofalife\Reports\Models\Report as ReportModel;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
@@ -52,6 +53,11 @@ class HandleReportCommand extends Command
         if ($resultHandler) {
             $excelWriter->store($report->format, Storage::disk($report->disk)
                 ->getDriver()->getAdapter()->getPathPrefix());
+
+            $report->getReportModel()->update([
+                'status' => ReportModel::STATUS_COMPLETED,
+                'is_completed' => true,
+            ]);
         }
     }
 }
