@@ -5,6 +5,7 @@ namespace agoalofalife\Reports\Console;
 
 use agoalofalife\Reports\Report;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 /**
@@ -46,7 +47,11 @@ class HandleReportCommand extends Command
         }
 
         $report = app()->make($classReport);
-//        dd($report->handler('s'));
-        Excel::create($report->getFileName(), [$report, 'handler'])->store('xls', storage_path('excel/exports'));
+        $excelWriter = Excel::create($report->getFileName(), $resultHandler = [$report, 'handler']);
+        // if method handler return true, meaning 'success' result
+        if ($resultHandler) {
+            $excelWriter->store($report->format, Storage::disk($report->disk)
+                ->getDriver()->getAdapter()->getPathPrefix());
+        }
     }
 }

@@ -12,7 +12,13 @@ class DummyClass extends Report implements HandlerReport, StorageReport
      * Disk for filesystem
      * @var string
      */
-    protected $disk = 'public';
+    public $disk = 'public';
+
+  /**
+     * Format export : xls, xlsx, pdf, csv
+     * @var string
+     */
+    public $format = 'xlsx';
 
      /**
      * Get file name
