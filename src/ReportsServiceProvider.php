@@ -23,7 +23,7 @@ class ReportsServiceProvider extends ServiceProvider
     public function register()
     {
         if (! defined('REPORTS_PATH')) {
-            define('POSTMAN_PATH', realpath(__DIR__.'/../'));
+            define('REPORTS_PATH', realpath(__DIR__.'/../'));
         }
     }
 
