@@ -77,7 +77,7 @@ class DashboardController extends Controller
 
     /**
      * @param string $className
-     * @return mixed
+     * @return mixed=
      */
     public function downloadFile(string $className)
     {

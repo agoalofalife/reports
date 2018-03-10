@@ -6,6 +6,9 @@ namespace agoalofalife\Tests\Feature\Http\Controllers;
 use agoalofalife\Reports\Models\Report;
 use agoalofalife\Tests\Support\FakeReport\TestReport;
 use agoalofalife\Tests\TestCase;
+use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Foundation\Testing\Concerns\InteractsWithDatabase;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class DashboardControllerTest
@@ -13,6 +16,8 @@ use agoalofalife\Tests\TestCase;
  */
 class DashboardControllerTest extends TestCase
 {
+    use InteractsWithDatabase;
+
     protected $fakeReportClass = TestReport::class;
 
     public function testTableColumnLocalEn() : void
@@ -70,6 +75,50 @@ class DashboardControllerTest extends TestCase
             'data' => [
                 'count' => $randomInt
             ]
+        ]);
+    }
+
+    public function testUpdateReport() : void
+    {
+        factory(Report::class)->create([
+            'class_name' => TestReport::class
+        ]);
+        $this->post('reports/api/dashboard.reports.update', [
+            'class' => TestReport::class
+        ])->assertJson([
+            'data' => [
+                'status' => 'success'
+            ]
+        ]);
+
+        $this->assertDatabaseHas('reports', [
+            'class_name' => TestReport::class,
+            'status' => Report::STATUS_PROCESS,
+        ]);
+    }
+
+    public function testDownloadFileClassNotExist() : void
+    {
+        $this->get('reports/api/dashboard.file.download/')->assertStatus(500);
+    }
+
+    public function testDownloadFile() : void
+    {
+        $report = app()->make(TestReport::class);
+        factory(Report::class)->create([
+            'class_name' => TestReport::class
+        ]);
+
+        $fileSystem = $this->mock(Filesystem::class);
+        $fileSystem->shouldReceive('download')->once()->with($report->getFileNormalize());
+        Storage::shouldReceive('disk')->with($report->disk)->once()->andReturn($fileSystem);
+
+        $className = str_replace('\\', '@', TestReport::class);
+        $this->get('reports/api/dashboard.file.download/' . $className)->assertStatus(200);
+
+        $this->assertDatabaseHas('reports', [
+            'class_name' => TestReport::class,
+            'is_completed' => false,
         ]);
     }
 }
