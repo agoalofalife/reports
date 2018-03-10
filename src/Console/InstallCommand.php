@@ -2,8 +2,13 @@
 declare(strict_types=1);
 
 namespace agoalofalife\Reports\Console;
+
 use Illuminate\Console\Command;
 
+/**
+ * Class InstallCommand
+ * @package agoalofalife\Reports\Console
+ */
 class InstallCommand extends Command
 {
     /**
