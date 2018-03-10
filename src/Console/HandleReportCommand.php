@@ -51,7 +51,7 @@ class HandleReportCommand extends Command
         $excelWriter = Excel::create($report->getFileName(), $resultHandler = [$report, 'handler']);
         // if method handler return true, meaning 'success' result
         if ($resultHandler) {
-            $excelWriter->store($report->format, Storage::disk($report->disk)
+            $excelWriter->store($report->extension, Storage::disk($report->disk)
                 ->getDriver()->getAdapter()->getPathPrefix());
 
             $report->getReportModel()->update([
