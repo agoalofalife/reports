@@ -33,7 +33,6 @@ class InstallCommand extends Command
     {
         $this->call('vendor:publish', ['--tag' => 'reports-migration']);
         $this->call('migrate');
-        $this->call('reports:seed');
         $this->call('reports:assets');
     }
 }

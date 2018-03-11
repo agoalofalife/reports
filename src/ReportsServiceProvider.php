@@ -38,12 +38,10 @@ class ReportsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/lang' => resource_path('lang/vendor/reports'),
         ], 'reports-migration');
-//        $this->publishes([
-//            REPORTS_PATH.'/public' => public_path('vendor/reports'),
-//        ], 'reports-assets');
-//        $this->publishes([
-//            __DIR__.'/../database/seeds' => database_path('seeds'),
-//        ], 'reports-migration');
+        $this->publishes([
+            REPORTS_PATH.'/public' => public_path('vendor/reports'),
+        ], 'reports-assets');
+
         $this->publishes([
             __DIR__.'/../resources/assets/js/components' => base_path('resources/assets/js/components/reports'),
         ], 'reports-components');
@@ -57,7 +55,6 @@ class ReportsServiceProvider extends ServiceProvider
         $this->commands([
             Console\InstallCommand::class,
             Console\AssetsConsole::class,
-            Console\SeederCommand::class,
             Console\ReportMakeCommand::class,
             Console\HandleReportCommand::class,
             Console\ParseReportsCommand::class,
