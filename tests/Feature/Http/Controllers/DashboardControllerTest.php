@@ -99,7 +99,7 @@ class DashboardControllerTest extends TestCase
 
     public function testDownloadFileClassNotExist() : void
     {
-        $this->get('reports/api/dashboard.file.download/')->assertStatus(500);
+        $this->get('reports/api/dashboard.file.download/' . $this->faker()->word)->assertStatus(500);
     }
 
     public function testDownloadFile() : void
