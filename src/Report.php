@@ -104,6 +104,13 @@ abstract class Report implements ResourceCollectionReport
     }
 
     /**
+     * @return bool
+     */
+    public function getCompleted() : bool
+    {
+        return $this->isCompleted;
+    }
+    /**
      * Change status state report
      * @param string $status
      */
