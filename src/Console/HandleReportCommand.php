@@ -58,6 +58,8 @@ class HandleReportCommand extends Command
                 'status' => ReportModel::STATUS_COMPLETED,
                 'is_completed' => true,
             ]);
+            // send notification
+            $report->send();
         }
     }
 }
