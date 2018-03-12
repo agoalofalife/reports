@@ -14,10 +14,10 @@ class DummyClass extends Report implements HandlerReport
     public $disk = 'public';
 
   /**
-     * Format export : xls, xlsx, pdf, csv
+     * Extension export : xls, xlsx, pdf, csv
      * @var string
      */
-    public $format = 'xlsx';
+    public $extension = 'xlsx';
 
      /**
      * Get file name
