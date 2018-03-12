@@ -43,7 +43,7 @@ class ParseReportsCommandTest extends TestCase
         Artisan::call('reports:parse');
         $this->assertDatabaseHas('reports', [
             'class_name' => TestReport::class,
-            'status' => ReportModel::STATUS_WORKER
+            'status' => ReportModel::STATUS_COMPLETED
         ]);
     }
 }
