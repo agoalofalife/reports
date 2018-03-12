@@ -177,3 +177,11 @@ And method `getNotification`, return `Notification` type.
         return new InvoicePaid();
     }
 ```
+```php
+// app/User.php
+
+    public function routeNotificationForSlack($notification)
+    {
+        return 'hook';
+    }
+```
