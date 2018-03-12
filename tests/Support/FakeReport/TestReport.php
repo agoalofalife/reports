@@ -4,13 +4,16 @@ declare(strict_types=1);
 namespace agoalofalife\Tests\Support\FakeReport;
 
 use agoalofalife\Reports\Contracts\HandlerReport;
+use agoalofalife\Reports\Contracts\NotificationReport;
 use agoalofalife\Reports\Report;
+use agoalofalife\Tests\Support\FakeNotification\InvoicePaid;
+use Illuminate\Notifications\Notification;
 
 /**
  * Class TestReport
  * @package App\Reports
  */
-class TestReport extends Report implements HandlerReport
+class TestReport extends Report implements HandlerReport, NotificationReport
 {
     /**
      * Disk for filesystem
@@ -66,5 +69,23 @@ class TestReport extends Report implements HandlerReport
         });
 
         return true;
+    }
+
+    /**
+     * Return email owner report
+     * @return string
+     */
+    public function getOwnerEmail(): string
+    {
+        return 'test@test.ru';
+    }
+
+    /**
+     * Return class notification
+     * @return Notification
+     */
+    public function getNotification(): Notification
+    {
+       return new InvoicePaid();
     }
 }

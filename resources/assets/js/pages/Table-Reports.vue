@@ -36,8 +36,7 @@
                     <!--filter-placement="bottom-end"-->
             <!--&gt;-->
                 <template slot-scope="scope">
-                    <el-tag :type="'primary'" close-transition>{{scope.row.name}}</el-tag>
-                    <el-tag :type="'primary'" close-transition>{{scope.row.name}}</el-tag>
+                    <el-tag v-for="notification in scope.row.notifications" :key="notification" :type="'primary'" close-transition>{{notification}}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column

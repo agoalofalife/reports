@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace agoalofalife\Reports;
 
+use agoalofalife\Reports\Contracts\NotificationReport;
 use agoalofalife\Reports\Contracts\ResourceCollectionReport;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -62,7 +63,8 @@ abstract class Report implements ResourceCollectionReport
             'path' => $this->getPathToFile(),
             'lastModified' => $this->getDateLastModified(),
             'isCompleted' => $this->isCompleted,
-            'status' => $this->status
+            'status' => $this->status,
+            'notifications' => $this->getListNotifications()
         ];
     }
 
@@ -136,5 +138,16 @@ abstract class Report implements ResourceCollectionReport
     public function getFileNormalize() : string
     {
         return "{$this->getFilename()}.{$this->extension}";
+    }
+
+    /**
+     * @return array
+     */
+    public function getListNotifications() : array
+    {
+        if ($this instanceof NotificationReport) {
+            return $this->getNotification()->via([]);
+        }
+        return [];
     }
 }
