@@ -28,15 +28,14 @@
                     width="250">
             </el-table-column>
             <el-table-column
-                    prop="name"
                     label="Notifications"
                     width="200">
-                    <!--:filters="[{ text: 'Home', value: 'Home' }, { text: 'Office', value: 'Office' }]"-->
-                    <!--:filter-method="filterTag"-->
-                    <!--filter-placement="bottom-end"-->
-            <!--&gt;-->
                 <template slot-scope="scope">
-                    <el-tag v-for="notification in scope.row.notifications" :key="notification" :type="'primary'" close-transition>{{notification}}</el-tag>
+                    <el-tag
+                            v-for="notification in scope.row.notifications"
+                            :key="notification"
+                            :type="'primary'"
+                            close-transition>{{notification}}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column
@@ -121,7 +120,7 @@
                             type: 'warning'
                         });
                     });
-            }
+            },
         },
         created(){
             this.$http.get('/reports/api/dashboard.table.column')

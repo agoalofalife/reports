@@ -5,6 +5,7 @@ namespace agoalofalife\Tests\Feature\Http\Controllers;
 
 use agoalofalife\Reports\Models\Report;
 use agoalofalife\Tests\Support\FakeReport\TestReport;
+use agoalofalife\Tests\Support\FakeReport\TestReportNotNotification;
 use agoalofalife\Tests\TestCase;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithDatabase;
@@ -19,6 +20,7 @@ class DashboardControllerTest extends TestCase
     use InteractsWithDatabase;
 
     protected $fakeReportClass = TestReport::class;
+    protected $fakeReportClassWithoutNotif = TestReportNotNotification::class;
 
     public function testTableColumnLocalEn() : void
     {
@@ -50,7 +52,32 @@ class DashboardControllerTest extends TestCase
                   "lastModified" => null,
                   "isCompleted" => false,
                   "status" => Report::STATUS_NEW,
+                  "notifications" => ['mail']
             ]
+            ]
+        ]);
+    }
+
+    public function testGetReportsWithoutNotifications() : void
+    {
+        config(['reports.reports' => [
+            $this->fakeReportClassWithoutNotif
+        ]]);
+
+        $report = app()->make($this->fakeReportClassWithoutNotif);
+
+        $this->get('reports/api/dashboard.reports')->assertJson([
+            'data' => [
+                [
+                    "name" => $report->getTitle(),
+                    "description" => $report->getDescription(),
+                    "class" => $this->fakeReportClassWithoutNotif,
+                    "path" => null,
+                    "lastModified" => null,
+                    "isCompleted" => false,
+                    "status" => Report::STATUS_NEW,
+                    "notifications" => []
+                ]
             ]
         ]);
     }
