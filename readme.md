@@ -154,3 +154,26 @@ Method `getDescription` return description in UI.
 Method `handler` is base method. Package use [external](https://github.com/Maatwebsite/Laravel-Excel) package.
 
 Method is a small wrapper.
+
+
+### Notification
+
+Once the report is ready, you can send [notification](https://laravel.com/docs/5.5/notifications).
+
+For this you need to implement interface agoalofalife\Reports\Contracts\NotificationReport.
+
+Method `getNotifiable` return `notifiable`, which has a method `routeNotificationFor`.
+
+And method `getNotification`, return `Notification` type.
+```php
+    // implements agoalofalife\Reports\Contracts\NotificationReport
+    public function getNotifiable()
+    {
+        return User::where('email', 'agoalofalife@gmail.com')->get()->first();
+    }
+
+    public function getNotification(): Notification
+    {
+        return new InvoicePaid();
+    }
+```
