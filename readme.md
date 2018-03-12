@@ -160,7 +160,7 @@ Method is a small wrapper.
 
 Once the report is ready, you can send [notification](https://laravel.com/docs/5.5/notifications).
 
-For this you need to implement interface agoalofalife\Reports\Contracts\NotificationReport.
+For this you need to implement interface `agoalofalife\Reports\Contracts\NotificationReport`.
 
 Method `getNotifiable` return `notifiable`, which has a method `routeNotificationFor`.
 
