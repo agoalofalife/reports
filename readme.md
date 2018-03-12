@@ -29,7 +29,7 @@ composer require agoalofalife/reports
 ```
 
 ```php
-php artisan reports install
+php artisan reports:install
 ```
 
 ### Locale
@@ -67,6 +67,14 @@ You create new file report:
 ```php
 php artisan make:report NameReport
 ```
+Insert in config `config/reports.php` :
+```php
+
+  'reports' => [
+          \App\Reports\TestReport::class
+    ],
+```
+
 Fill the class:
 ```php
 <?php
