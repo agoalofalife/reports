@@ -129,6 +129,7 @@ class TestReport extends Report implements HandlerReport
                 array('test3', 'test4')
             ));
         });
+      return true;
     }
 }
 ```

@@ -19,7 +19,7 @@ mix
     //     'public/fonts/vendor',
     //     'public/fonts/vendor'
     // )
-    .copy('public', '../../../public/vendor/reports')
+    // .copy('public', '../../../public/vendor/reports')
     .sourceMaps()
     .version();
 
