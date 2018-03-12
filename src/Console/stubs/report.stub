@@ -46,19 +46,11 @@ class DummyClass extends Report implements HandlerReport
         return '';
     }
     /**
+     * @param $excel
      * @return bool
      */
-    public function handler() : bool
+    public function handler($excel) : bool
     {
         // TODO: Implement handler() method.
-    }
-
-     /**
-     * Method save file
-     * @return mixed
-     */
-    public function storage()
-    {
-        // TODO: Implement storage() method.
     }
 }
