@@ -36,11 +36,11 @@ class ParseReportsCommand extends Command
 
         if ($reportInProcess->count() > 0) {
             $reportInProcess = $reportInProcess->random();
-            $this->call('reports:handle', ['classReport' => $reportInProcess->class_name]);
             $reportInProcess->update([
                 'pid' => getmypid(),
                 'status' => Report::STATUS_WORKER
             ]);
+            $this->call('reports:handle', ['classReport' => $reportInProcess->class_name]);
         } else {
             $this->warn('Reports in the status "in process" is missing');
         }
