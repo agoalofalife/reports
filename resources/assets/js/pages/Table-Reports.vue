@@ -28,6 +28,19 @@
                     width="250">
             </el-table-column>
             <el-table-column
+                    prop="name"
+                    label="Notifications"
+                    width="200">
+                    <!--:filters="[{ text: 'Home', value: 'Home' }, { text: 'Office', value: 'Office' }]"-->
+                    <!--:filter-method="filterTag"-->
+                    <!--filter-placement="bottom-end"-->
+            <!--&gt;-->
+                <template slot-scope="scope">
+                    <el-tag :type="'primary'" close-transition>{{scope.row.name}}</el-tag>
+                    <el-tag :type="'primary'" close-transition>{{scope.row.name}}</el-tag>
+                </template>
+            </el-table-column>
+            <el-table-column
                     fixed="right"
                     :label="columnsName.operations"
                     width="120">
