@@ -169,7 +169,7 @@ And method `getNotification`, return `Notification` type.
     // implements agoalofalife\Reports\Contracts\NotificationReport
     public function getNotifiable()
     {
-        return User::where('email', 'agoalofalife@gmail.com')->get()->first();
+        return User::where('email', 'test@gmail.com')->get()->first();
     }
 
     public function getNotification(): Notification
