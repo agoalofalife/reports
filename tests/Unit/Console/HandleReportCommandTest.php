@@ -9,6 +9,7 @@ use agoalofalife\Tests\Support\FakeReport\TestReport;
 use agoalofalife\Tests\TestCase;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithDatabase;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Notification;
 use Maatwebsite\Excel\ExcelServiceProvider;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
@@ -36,6 +37,9 @@ class HandleReportCommandTest extends TestCase
         factory(ReportModel::class)->create([
             'class_name' => TestReport::class
         ]);
+
+        Notification::shouldReceive('send')->once();
+
         $excelWriter = $this->mock(LaravelExcelWriter::class);
         $this->app->register(ExcelServiceProvider::class);
         Excel::shouldReceive('create')

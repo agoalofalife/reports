@@ -8,6 +8,7 @@ use agoalofalife\Tests\Support\FakeReport\TestReport;
 use agoalofalife\Tests\TestCase;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithDatabase;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Notification;
 use Maatwebsite\Excel\ExcelServiceProvider;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
@@ -27,6 +28,9 @@ class ParseReportsCommandTest extends TestCase
         $this->assertRegExp('/Reports in the status "in process" is missing/', Artisan::output());
     }
 
+    /**
+     *
+     */
     public function testHandle() : void
     {
         $report = app()->make(TestReport::class);
@@ -34,6 +38,8 @@ class ParseReportsCommandTest extends TestCase
             'class_name' => TestReport::class,
             'status' => ReportModel::STATUS_PROCESS
         ]);
+        Notification::shouldReceive('send')->once();
+
         $excelWriter = $this->mock(LaravelExcelWriter::class);
         $this->app->register(ExcelServiceProvider::class);
         Excel::shouldReceive('create')

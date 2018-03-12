@@ -12,10 +12,11 @@ use Illuminate\Notifications\Notification;
 interface NotificationReport
 {
     /**
-     * Return email owner report
-     * @return string
+     * Return Notifiable
+     * Need implementation method routeNotificationFor...
+     * @return object
      */
-    public function getOwnerEmail() : string;
+    public function getNotifiable();
 
     /**
      * Return class notification

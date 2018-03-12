@@ -5,7 +5,6 @@ namespace agoalofalife\Reports;
 
 use agoalofalife\Reports\Contracts\NotificationReport;
 use agoalofalife\Reports\Contracts\ResourceCollectionReport;
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
@@ -160,12 +159,7 @@ abstract class Report implements ResourceCollectionReport
     public function send() : void
     {
         if ($this instanceof NotificationReport) {
-            $users = User::where('email', $this->getOwnerEmail())->get();
-            if ($users->count() === 1) {
-                Notification::send($users->first(), $this->getNotification());
-            } else {
-                Log::error('when sending notifications, in database not found user with email '.$this->getOwnerEmail());
-            }
+            Notification::send($this->getNotifiable(), $this->getNotification());
         }
     }
 }
