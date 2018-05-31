@@ -12,7 +12,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.2.1",
-    "vue": "^2.5.13"
+    "vue": "^2.5.16",
+    "vue-template-compiler": "^2.5.16"
   },
   "devDependencies": {
     "cross-env": "^5.1.3",
