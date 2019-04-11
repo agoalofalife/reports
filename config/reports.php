@@ -5,4 +5,5 @@ return [
 
     ],
     'middleware' => '',
-];
+    'path_js' => 'vendor/reports'
+ ];
