@@ -14,6 +14,9 @@
 PHP verison >= 7.1.0
 Laravel version >= 5.5
 
+```
+not support Laravel version 5.8 & >
+```
 ### What is it?
 
 This is package offers ready UI and some code, for reports. 
